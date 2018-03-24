@@ -6,11 +6,9 @@ public class TableController : MonoBehaviour
     public Vector3 Size = new Vector3(0.3f, 0.2f, 0.5f);
     public float DeltaSize = 0.001f;
 
-    public GameObject SpawnPoint, BrickExternal, BrickInternal;
+    public MeshFilter BrickExternal, BrickInternal;
 
     public int SubdivideLevel = 50;
-
-    private MeshFilter meshFilterExternal, meshFilterInternal;
     
     private Vector3[] verticesExternal, verticesInternal;
 
@@ -19,17 +17,17 @@ public class TableController : MonoBehaviour
         BrickExternal.transform.localScale = Size;
         BrickInternal.transform.localScale = Size * (1 - DeltaSize);
 
-        BrickExternal.transform.position = SpawnPoint.transform.position + Vector3.up * (Size.y / 2);
+        BrickExternal.transform.position = transform.position + Vector3.up * (Size.y / 2);
         BrickInternal.transform.position = BrickExternal.transform.position;
 
-        meshFilterExternal = BrickExternal.GetComponent<MeshFilter>();
-        meshFilterInternal = BrickInternal.GetComponent<MeshFilter>();
+        BrickExternal = BrickExternal.GetComponent<MeshFilter>();
+        BrickInternal = BrickInternal.GetComponent<MeshFilter>();
 
-        MeshHelper.Subdivide(meshFilterExternal.mesh, SubdivideLevel);
-        MeshHelper.Subdivide(meshFilterInternal.mesh, SubdivideLevel);
+        MeshHelper.Subdivide(BrickExternal.mesh, SubdivideLevel);
+        MeshHelper.Subdivide(BrickInternal.mesh, SubdivideLevel);
 
-        verticesExternal = meshFilterExternal.mesh.vertices;
-        verticesInternal = meshFilterInternal.mesh.vertices;
+        verticesExternal = BrickExternal.mesh.vertices;
+        verticesInternal = BrickInternal.mesh.vertices;
     }
 
     void Update()
@@ -43,7 +41,7 @@ public class TableController : MonoBehaviour
                 verticesExternal[i] = BrickExternal.transform.InverseTransformPoint(hit.point + Vector3.down * DeltaSize);
             }
         }
-        meshFilterExternal.mesh.vertices = verticesExternal;
+        BrickExternal.mesh.vertices = verticesExternal;
 
         for (int i = 0; i < verticesInternal.Length; i++)
         {
@@ -54,6 +52,6 @@ public class TableController : MonoBehaviour
                 verticesInternal[i] = BrickInternal.transform.InverseTransformPoint(hit.point);
             }
         }
-        meshFilterInternal.mesh.vertices = verticesInternal;
+        BrickInternal.mesh.vertices = verticesInternal;
     }
 }

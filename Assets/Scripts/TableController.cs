@@ -7,7 +7,7 @@ public class TableController : MonoBehaviour
     public float DeltaSize = 0.001f;
 
     public Collider Knife;
-    public MeshFilter BrickExternal, BrickInternal;
+    public MeshFilter MeshExternal, MeshInternal;
 
     public int SubdivideLevel = 50;
 
@@ -15,17 +15,17 @@ public class TableController : MonoBehaviour
 
     void Awake()
     {
-        BrickExternal.transform.localScale = Size;
-        BrickInternal.transform.localScale = Size * (1 - DeltaSize);
+        MeshExternal.transform.localScale = Size;
+        MeshInternal.transform.localScale = Size * (1 - DeltaSize);
 
-        BrickExternal.transform.position = transform.position + Vector3.up * (Size.y / 2);
-        BrickInternal.transform.position = BrickExternal.transform.position;
+        MeshExternal.transform.position = transform.position + Vector3.up * (Size.y / 2);
+        MeshInternal.transform.position = MeshExternal.transform.position;
 
-        MeshHelper.Subdivide(BrickExternal.mesh, SubdivideLevel);
-        MeshHelper.Subdivide(BrickInternal.mesh, SubdivideLevel);
+        MeshHelper.Subdivide(MeshExternal.mesh, SubdivideLevel);
+        MeshHelper.Subdivide(MeshInternal.mesh, SubdivideLevel);
 
-        verticesExternal = BrickExternal.mesh.vertices;
-        verticesInternal = BrickInternal.mesh.vertices;
+        verticesExternal = MeshExternal.mesh.vertices;
+        verticesInternal = MeshInternal.mesh.vertices;
     }
 
     void Update()
@@ -34,8 +34,8 @@ public class TableController : MonoBehaviour
         var cores = SystemInfo.processorCount;
 
         {
-            var knifeBounds = BrickExternal.transform.InverseTransformBounds(Knife.bounds);
-            var knifeBottom = BrickExternal.transform.InverseTransformPoint(knifeBottomWorld);
+            var knifeBounds = MeshExternal.transform.InverseTransformBounds(Knife.bounds);
+            var knifeBottom = MeshExternal.transform.InverseTransformPoint(knifeBottomWorld).y;
             var vertices = verticesExternal;
             var verticesPerCore = (vertices.Length - 1) / cores + 1;
 
@@ -46,14 +46,14 @@ public class TableController : MonoBehaviour
 
                 for (int i = start; i < end; i++)
                     if (knifeBounds.Contains(vertices[i]))
-                        vertices[i].y = knifeBottom.y - DeltaSize;
+                        vertices[i].y = knifeBottom - DeltaSize;
             });
-            BrickExternal.mesh.vertices = vertices;
+            MeshExternal.mesh.vertices = vertices;
         }
         
         {
-            var knifeBounds = BrickInternal.transform.InverseTransformBounds(Knife.bounds);
-            var knifeBottom = BrickInternal.transform.InverseTransformPoint(knifeBottomWorld);
+            var knifeBounds = MeshInternal.transform.InverseTransformBounds(Knife.bounds);
+            var knifeBottom = MeshInternal.transform.InverseTransformPoint(knifeBottomWorld).y;
             var vertices = verticesExternal;
             var verticesPerCore = (vertices.Length - 1) / cores + 1;
 
@@ -64,9 +64,9 @@ public class TableController : MonoBehaviour
 
                 for (int i = start; i < end; i++)
                     if (knifeBounds.Contains(vertices[i]))
-                        vertices[i].y = knifeBottom.y;
+                        vertices[i].y = knifeBottom;
             });
-            BrickInternal.mesh.vertices = vertices;
+            MeshInternal.mesh.vertices = vertices;
         }
     }
 }

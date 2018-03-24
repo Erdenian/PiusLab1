@@ -453,8 +453,8 @@ MonoBehaviour:
   Size: {x: 0.3, y: 0.2, z: 0.5}
   DeltaSize: 0.001
   Knife: {fileID: 1693509418}
-  BrickExternal: {fileID: 1259631298}
-  BrickInternal: {fileID: 1710742156}
+  MeshExternal: {fileID: 1259631298}
+  MeshInternal: {fileID: 1710742156}
   SubdivideLevel: 100
 --- !u!1 &1259631294
 GameObject:

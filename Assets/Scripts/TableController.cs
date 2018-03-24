@@ -6,10 +6,11 @@ public class TableController : MonoBehaviour
     public Vector3 Size = new Vector3(0.3f, 0.2f, 0.5f);
     public float DeltaSize = 0.001f;
 
+    public Collider Knife;
     public MeshFilter BrickExternal, BrickInternal;
 
     public int SubdivideLevel = 50;
-    
+
     private Vector3[] verticesExternal, verticesInternal;
 
     void Awake()
@@ -20,9 +21,6 @@ public class TableController : MonoBehaviour
         BrickExternal.transform.position = transform.position + Vector3.up * (Size.y / 2);
         BrickInternal.transform.position = BrickExternal.transform.position;
 
-        BrickExternal = BrickExternal.GetComponent<MeshFilter>();
-        BrickInternal = BrickInternal.GetComponent<MeshFilter>();
-
         MeshHelper.Subdivide(BrickExternal.mesh, SubdivideLevel);
         MeshHelper.Subdivide(BrickInternal.mesh, SubdivideLevel);
 
@@ -32,26 +30,43 @@ public class TableController : MonoBehaviour
 
     void Update()
     {
-        for (int i = 0; i < verticesExternal.Length; i++)
-        {
-            RaycastHit hit;
-            Ray ray = new Ray(BrickExternal.transform.TransformPoint(verticesExternal[i]) + Vector3.down, Vector3.up);
-            if (Physics.Raycast(ray, out hit, 1.0f))
-            {
-                verticesExternal[i] = BrickExternal.transform.InverseTransformPoint(hit.point + Vector3.down * DeltaSize);
-            }
-        }
-        BrickExternal.mesh.vertices = verticesExternal;
+        var knifeBottomWorld = Knife.transform.position - Knife.bounds.extents;
+        var cores = SystemInfo.processorCount;
 
-        for (int i = 0; i < verticesInternal.Length; i++)
         {
-            RaycastHit hit;
-            Ray ray = new Ray(BrickInternal.transform.TransformPoint(verticesInternal[i]) + Vector3.down, Vector3.up);
-            if (Physics.Raycast(ray, out hit, 1.0f))
+            var knifeBounds = BrickExternal.transform.InverseTransformBounds(Knife.bounds);
+            var knifeBottom = BrickExternal.transform.InverseTransformPoint(knifeBottomWorld);
+            var vertices = verticesExternal;
+            var verticesPerCore = (vertices.Length - 1) / cores + 1;
+
+            Parallel.For(SystemInfo.processorCount, (core) =>
             {
-                verticesInternal[i] = BrickInternal.transform.InverseTransformPoint(hit.point);
-            }
+                var start = core * verticesPerCore;
+                var end = Mathf.Min((core + 1) * verticesPerCore, vertices.Length);
+
+                for (int i = start; i < end; i++)
+                    if (knifeBounds.Contains(vertices[i]))
+                        vertices[i].y = knifeBottom.y - DeltaSize;
+            });
+            BrickExternal.mesh.vertices = vertices;
         }
-        BrickInternal.mesh.vertices = verticesInternal;
+        
+        {
+            var knifeBounds = BrickInternal.transform.InverseTransformBounds(Knife.bounds);
+            var knifeBottom = BrickInternal.transform.InverseTransformPoint(knifeBottomWorld);
+            var vertices = verticesExternal;
+            var verticesPerCore = (vertices.Length - 1) / cores + 1;
+
+            Parallel.For(SystemInfo.processorCount, (core) =>
+            {
+                var start = core * verticesPerCore;
+                var end = Mathf.Min((core + 1) * verticesPerCore, vertices.Length);
+
+                for (int i = start; i < end; i++)
+                    if (knifeBounds.Contains(vertices[i]))
+                        vertices[i].y = knifeBottom.y;
+            });
+            BrickInternal.mesh.vertices = vertices;
+        }
     }
 }

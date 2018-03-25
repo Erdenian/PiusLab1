@@ -8,14 +8,19 @@ public class TableController : MonoBehaviour
 
     public Collider Knife;
     public MeshFilter MeshExternal, MeshInternal;
+    public MeshCollider BrickCollider;
 
     public int SubdivideLevel = 50;
+
+    public ParticleSystem Particles;
 
     private Vector3[] verticesExternal, verticesInternal;
     private float groundLevelExternal;
 
     void Awake()
     {
+        Application.targetFrameRate = 600;
+
         MeshExternal.transform.localScale = Size;
         MeshInternal.transform.localScale = Size * (1.0f - DeltaSize);
 
@@ -24,6 +29,8 @@ public class TableController : MonoBehaviour
 
         MeshHelper.Subdivide(MeshExternal.mesh, SubdivideLevel);
         MeshHelper.Subdivide(MeshInternal.mesh, SubdivideLevel);
+
+        //BrickCollider.sharedMesh = MeshInternal.mesh;
 
         verticesExternal = MeshExternal.mesh.vertices;
         verticesInternal = MeshInternal.mesh.vertices;
@@ -58,6 +65,13 @@ public class TableController : MonoBehaviour
         {
             MeshInternal.mesh.vertices = verticesInternal;
             MeshExternal.mesh.vertices = verticesExternal;
+            var emission = Particles.emission;
+            emission.enabled = true;
+        }
+        else
+        {
+            var emission = Particles.emission;
+            emission.enabled = false;
         }
     }
 }

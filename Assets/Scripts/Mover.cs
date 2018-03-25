@@ -11,6 +11,6 @@ public class Mover : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        transform.position = new Vector3(Mathf.Cos(Time.time * 2), -0.5f, -Mathf.Cos(Time.time * 0.085f)) * 0.25f;
+        transform.position = new Vector3(Mathf.Cos(Time.time * 2) * 0.25f, -0.17f, -Mathf.Cos(Time.time * 0.085f) * 0.25f);
 	}
 }

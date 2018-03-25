@@ -8,7 +8,6 @@ public class TableController : MonoBehaviour
 
     public Collider Knife;
     public MeshFilter MeshExternal, MeshInternal;
-    public MeshCollider BrickCollider;
 
     public int SubdivideLevel = 50;
 
@@ -29,8 +28,6 @@ public class TableController : MonoBehaviour
 
         MeshHelper.Subdivide(MeshExternal.mesh, SubdivideLevel);
         MeshHelper.Subdivide(MeshInternal.mesh, SubdivideLevel);
-
-        //BrickCollider.sharedMesh = MeshInternal.mesh;
 
         verticesExternal = MeshExternal.mesh.vertices;
         verticesInternal = MeshInternal.mesh.vertices;

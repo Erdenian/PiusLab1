@@ -12,11 +12,12 @@ public class TableController : MonoBehaviour
     public int SubdivideLevel = 50;
 
     private Vector3[] verticesExternal, verticesInternal;
+    private float groundLevelExternal;
 
     void Awake()
     {
         MeshExternal.transform.localScale = Size;
-        MeshInternal.transform.localScale = Size * (1 - DeltaSize);
+        MeshInternal.transform.localScale = Size * (1.0f - DeltaSize);
 
         MeshExternal.transform.position = transform.position + Vector3.up * (Size.y / 2);
         MeshInternal.transform.position = MeshExternal.transform.position;
@@ -26,47 +27,37 @@ public class TableController : MonoBehaviour
 
         verticesExternal = MeshExternal.mesh.vertices;
         verticesInternal = MeshInternal.mesh.vertices;
+
+        groundLevelExternal = (MeshExternal.transform.position - MeshExternal.mesh.bounds.extents).y;
     }
 
     void Update()
     {
-        var knifeBottomWorld = Knife.transform.position - Knife.bounds.extents;
+        var knifeBounds = MeshInternal.transform.InverseTransformBounds(Knife.bounds);
+        var knifeBottom = MeshInternal.transform.InverseTransformPoint(Knife.transform.position - Knife.bounds.extents).y;
+
         var cores = SystemInfo.processorCount;
+        var verticesPerCore = (verticesExternal.Length - 1) / cores + 1;
 
+        bool changed = false;
+        Parallel.For(cores, (core) =>
         {
-            var knifeBounds = MeshExternal.transform.InverseTransformBounds(Knife.bounds);
-            var knifeBottom = MeshExternal.transform.InverseTransformPoint(knifeBottomWorld).y;
-            var vertices = verticesExternal;
-            var verticesPerCore = (vertices.Length - 1) / cores + 1;
+            var start = core * verticesPerCore;
+            var end = Mathf.Min((core + 1) * verticesPerCore, verticesExternal.Length);
 
-            Parallel.For(SystemInfo.processorCount, (core) =>
-            {
-                var start = core * verticesPerCore;
-                var end = Mathf.Min((core + 1) * verticesPerCore, vertices.Length);
+            for (int i = start; i < end; i++)
+                if (knifeBounds.Contains(verticesInternal[i]))
+                {
+                    verticesInternal[i].y = knifeBottom;
+                    verticesExternal[i].y = groundLevelExternal;
+                    changed = true;
+                }
+        });
 
-                for (int i = start; i < end; i++)
-                    if (knifeBounds.Contains(vertices[i]))
-                        vertices[i].y = knifeBottom - DeltaSize;
-            });
-            MeshExternal.mesh.vertices = vertices;
-        }
-        
+        if (changed)
         {
-            var knifeBounds = MeshInternal.transform.InverseTransformBounds(Knife.bounds);
-            var knifeBottom = MeshInternal.transform.InverseTransformPoint(knifeBottomWorld).y;
-            var vertices = verticesExternal;
-            var verticesPerCore = (vertices.Length - 1) / cores + 1;
-
-            Parallel.For(SystemInfo.processorCount, (core) =>
-            {
-                var start = core * verticesPerCore;
-                var end = Mathf.Min((core + 1) * verticesPerCore, vertices.Length);
-
-                for (int i = start; i < end; i++)
-                    if (knifeBounds.Contains(vertices[i]))
-                        vertices[i].y = knifeBottom;
-            });
-            MeshInternal.mesh.vertices = vertices;
+            MeshInternal.mesh.vertices = verticesInternal;
+            MeshExternal.mesh.vertices = verticesExternal;
         }
     }
 }

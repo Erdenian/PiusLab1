@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.45143104, g: 0.50077504, b: 0.5715337, a: 1}
+  m_IndirectSpecularColor: {r: 0.45009792, g: 0.50014424, b: 0.5754648, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -274,7 +274,7 @@ Transform:
   m_GameObject: {fileID: 440506525}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.03, y: 0.03, z: 0.03}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 963006916}
   m_RootOrder: 1
@@ -393,7 +393,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -831476637
+  randomSeed: -1335861491
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -441,7 +441,7 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 20
+      scalar: 0.6
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -545,7 +545,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1
+      scalar: 0.03
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -837,7 +837,7 @@ ParticleSystem:
     serializedVersion: 5
     enabled: 1
     type: 4
-    angle: 40
+    angle: 45
     length: 5
     boxThickness: {x: 0, y: 0, z: 0}
     radiusThickness: 1
@@ -858,7 +858,7 @@ ParticleSystem:
     sphericalDirectionAmount: 0
     randomPositionAmount: 0
     radius:
-      value: 0.2
+      value: 0.02
       mode: 0
       spread: 0
       speed:
@@ -953,7 +953,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1000
+      scalar: 500
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -1248,7 +1248,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 3
       scalar: 12.56637
-      minScalar: 3.1415925
+      minScalar: 0
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -3859,7 +3859,6 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 963006916}
-  - component: {fileID: 963006917}
   m_Layer: 0
   m_Name: Knife
   m_TagString: Untagged
@@ -3874,7 +3873,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 963006915}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.5, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1693509420}
@@ -3882,17 +3881,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &963006917
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 963006915}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b82c8d9401e3dcf4aa1bb77f374fd226, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1127633306
 GameObject:
   m_ObjectHideFlags: 0
@@ -3902,6 +3890,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1127633307}
   - component: {fileID: 1127633308}
+  - component: {fileID: 1127633309}
   m_Layer: 0
   m_Name: Table
   m_TagString: Untagged
@@ -3916,7 +3905,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1127633306}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1259631295}
@@ -3945,6 +3934,17 @@ MonoBehaviour:
   BrickCollider: {fileID: 0}
   SubdivideLevel: 80
   Particles: {fileID: 440506528}
+--- !u!114 &1127633309
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1127633306}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b82c8d9401e3dcf4aa1bb77f374fd226, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1259631294
 GameObject:
   m_ObjectHideFlags: 0
@@ -4339,14 +4339,14 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2038244510}
-  m_LocalRotation: {x: 0.23397811, y: -0.3371439, z: 0.08689949, w: 0.9077647}
-  m_LocalPosition: {x: 0.268, y: 0.382, z: -0.477}
+  m_LocalRotation: {x: 0.10610942, y: 0.89386225, z: -0.31175688, w: 0.30423453}
+  m_LocalPosition: {x: -0.421, y: 0.303, z: 0.539}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 76336143}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 28.907001, y: -40.75, z: 0}
+  m_LocalEulerAnglesHint: {x: 38.455, y: 142.40701, z: 0}
 --- !u!1 &2135332054
 GameObject:
   m_ObjectHideFlags: 0

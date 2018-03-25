@@ -393,7 +393,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -1335861491
+  randomSeed: -1694729879
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -3931,7 +3931,6 @@ MonoBehaviour:
   Knife: {fileID: 1693509418}
   MeshExternal: {fileID: 1259631298}
   MeshInternal: {fileID: 1710742156}
-  BrickCollider: {fileID: 0}
   SubdivideLevel: 80
   Particles: {fileID: 440506528}
 --- !u!114 &1127633309
@@ -4094,8 +4093,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1693509416}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.25, z: 0}
-  m_LocalScale: {x: 0.05, y: 0.5, z: 0.05}
+  m_LocalPosition: {x: 0, y: 5, z: 0}
+  m_LocalScale: {x: 0.05, y: 10, z: 0.05}
   m_Children: []
   m_Father: {fileID: 963006916}
   m_RootOrder: 0
@@ -4276,6 +4275,7 @@ GameObject:
   - component: {fileID: 2038244513}
   - component: {fileID: 2038244512}
   - component: {fileID: 2038244511}
+  - component: {fileID: 2038244515}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -4347,6 +4347,25 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 38.455, y: 142.40701, z: 0}
+--- !u!114 &2038244515
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2038244510}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f27ca3bd98cdba1479386911668ccc3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 1710742153}
+  distance: 0.7
+  xSpeed: 300
+  ySpeed: 300
+  yMinLimit: -50
+  yMaxLimit: 50
+  distanceMin: 0.7
+  distanceMax: 3
 --- !u!1 &2135332054
 GameObject:
   m_ObjectHideFlags: 0

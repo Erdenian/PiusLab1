@@ -13,6 +13,7 @@ public class NetworkHandler : MonoBehaviour
 {
 
 	public int port = 1488;
+    public TableController tableController;
 
 	private Data data;
 	private TcpListener tcpListener;
@@ -22,8 +23,8 @@ public class NetworkHandler : MonoBehaviour
 	void Awake ()
 	{
 		string text = "{\nd\"reset\": true,\n\"blockSize\":{\"x\":0.0,\"y\":1.0,\"z\":0.0},\n\"knifeSize\":{\"x\":-1.0,\"y\":0.0,\"z\":0.0},\n\"points\":[\n{\"x\":1.0,\"y\":0.0,\"z\":0.0},\n{\"x\":0.0,\"y\":0.0,\"z\":1.0}\n]\n}";
-		Data data = (Data)JsonUtility.FromJson<Data> (text);// разбор полученного сообщения и инициализация объекта
-		Debug.Log (data.blockSize);
+		//Data data = (Data)JsonUtility.FromJson<Data> (text);// разбор полученного сообщения и инициализация объекта
+		//Debug.Log (data.blockSize);
 
 		// создаем параллельный поток для получения сообщений клиента
 		tcpListenerThread = new Thread (new ThreadStart (ListenForIncommingRequests));  
@@ -69,7 +70,7 @@ public class NetworkHandler : MonoBehaviour
 						Debug.Log ("Получено сообщение: " + clientMessage); 
 						try{
 							data = (Data)JsonUtility.FromJson<Data> (clientMessage);// разбор полученного сообщения и инициализация объекта
-							TableController.Reset();
+                            tableController.StartCutting(data.reset, data.blockSize, data.knifeSize, data.points);
 						}catch(Exception ex){
 							Debug.Log ("Json поврежден. Данные не получены");
 						}

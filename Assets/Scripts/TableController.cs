@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 public class TableController : MonoBehaviour
 {
@@ -18,7 +19,10 @@ public class TableController : MonoBehaviour
 
     public Vector3[] points;
 
-    public string Message = "";
+	public string Message = "Идет работа...";
+
+	public Text posX, posY, posZ;
+	public Text statement;
 
     private int currentPoint = 0;
 
@@ -46,13 +50,16 @@ public class TableController : MonoBehaviour
         verticesInternal = MeshInternal.mesh.vertices;
 
         groundLevelExternal = (MeshExternal.transform.position - MeshExternal.mesh.bounds.extents).y;
+		ShowPosition ();
     }
 
     void Update()
     {
+		ShowPosition ();
+		ShowStatement ();
         if (newCut)
         {
-            Message = "";
+            Message = "Идет работа...";
             if (reset)
             {
                 MeshExternal.transform.localScale = BlockSize;
@@ -141,4 +148,14 @@ public class TableController : MonoBehaviour
         MaxCutDepth = knifeSize.y;
         this.points = points;
     }
+
+	private void ShowPosition(){
+		posX.text = transform.position.x.ToString ();
+		posY.text = transform.position.y.ToString ();
+		posZ.text = transform.position.z.ToString ();
+	}
+
+	private void ShowStatement(){
+		statement.text = Message;
+	}
 }

@@ -393,7 +393,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -1694729879
+  randomSeed: 2058518447
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -4358,14 +4358,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f27ca3bd98cdba1479386911668ccc3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 1710742153}
+  target: {fileID: 963006916}
   distance: 0.7
-  xSpeed: 300
-  ySpeed: 300
+  xSpeed: 120
+  ySpeed: 120
   yMinLimit: -50
   yMaxLimit: 50
-  distanceMin: 0.7
+  distanceMin: 0.2
   distanceMax: 3
+  smoothTime: 999999
 --- !u!1 &2135332054
 GameObject:
   m_ObjectHideFlags: 0

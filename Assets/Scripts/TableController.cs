@@ -66,12 +66,13 @@ public class TableController : MonoBehaviour
                 verticesExternal = MeshExternal.mesh.vertices;
                 verticesInternal = MeshInternal.mesh.vertices;
 
+                transform.position = points[0];
+
                 reset = false;
             }
 
             Knife.transform.localScale = new Vector3(KnifeSize.x, Knife.transform.localScale.y, KnifeSize.z);
-            transform.position = points[0];
-            currentPoint = 1;
+            currentPoint = 0;
 
             newCut = false;
         }

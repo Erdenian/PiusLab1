@@ -159,7 +159,7 @@ public class TableController : MonoBehaviour
     public void ShowStatement()
     {
         if (Message == "") statement.text = "Идет работа...";
-        else statement.text = "Работа завершена";
+        else statement.text = Message;
     }
 
 

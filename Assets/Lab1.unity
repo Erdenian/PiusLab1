@@ -3930,7 +3930,7 @@ MonoBehaviour:
   MaxCutDepth: 0.5
   DeltaSize: 0.001
   Knife: {fileID: 1693509418}
-  Speed: 0.3
+  Speed: 1
   MeshExternal: {fileID: 1259631298}
   MeshInternal: {fileID: 1710742156}
   SubdivideLevel: 80
@@ -4273,6 +4273,7 @@ GameObject:
   - component: {fileID: 2038244512}
   - component: {fileID: 2038244511}
   - component: {fileID: 2038244515}
+  - component: {fileID: 2038244516}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -4372,6 +4373,26 @@ MonoBehaviour:
   texture2: {fileID: 2800000, guid: bf1610b2f47f8b544beeaddd74636f5c, type: 3}
   texture3: {fileID: 2800000, guid: bbf1d55c43dd7c348890a25fdd46807b, type: 3}
   texture4: {fileID: 2800000, guid: 4445e307c3fba30429c83279f4551689, type: 3}
+--- !u!114 &2038244516
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2038244510}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d901ddf32d7c84ed4b0f84623ef3a7a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _intensity: 1
+  _radius: 0.2
+  _sampleCount: 0
+  _sampleCountValue: 24
+  _downsampling: 0
+  _occlusionSource: 2
+  _ambientOnly: 0
+  _aoShader: {fileID: 4800000, guid: 7541b5f18b1224a81927d8b1184b122b, type: 3}
+  _quadMesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &2135332054
 GameObject:
   m_ObjectHideFlags: 0

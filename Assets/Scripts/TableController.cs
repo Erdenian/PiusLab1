@@ -45,7 +45,7 @@ public class TableController : MonoBehaviour
         verticesExternal = MeshExternal.mesh.vertices;
         verticesInternal = MeshInternal.mesh.vertices;
 
-        groundLevelExternal = (MeshExternal.transform.position - MeshExternal.mesh.bounds.extents).y;
+        groundLevelExternal = MeshExternal.transform.TransformPoint(MeshExternal.transform.position - MeshExternal.mesh.bounds.extents).y;
     }
 
     void Update()
@@ -78,7 +78,7 @@ public class TableController : MonoBehaviour
 
         if (currentPoint < points.Length)
         {
-            transform.position = Vector3.MoveTowards(transform.position, points[currentPoint], Speed);
+            transform.position = Vector3.MoveTowards(transform.position, points[currentPoint], Speed * Time.deltaTime);
             if (transform.position == points[currentPoint]) currentPoint++;
 
             var knifeBounds = MeshInternal.transform.InverseTransformBounds(Knife.bounds);
@@ -137,7 +137,7 @@ public class TableController : MonoBehaviour
 
         this.reset = reset;
         BlockSize = blockSize;
-        KnifeSize = new Vector2(knifeSize.x, knifeSize.y);
+        KnifeSize = new Vector3(knifeSize.x, 0.0f, knifeSize.z);
         MaxCutDepth = knifeSize.y;
         this.points = points;
     }

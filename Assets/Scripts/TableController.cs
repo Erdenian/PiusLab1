@@ -19,7 +19,7 @@ public class TableController : MonoBehaviour
 
     public Vector3[] points;
 
-	public string Message = "Идет работа...";
+	public string Message = "";
 
 	public Text posX, posY, posZ;
 	public Text statement;
@@ -59,7 +59,7 @@ public class TableController : MonoBehaviour
 		ShowStatement ();
         if (newCut)
         {
-            Message = "Идет работа...";
+            Message = "";
             if (reset)
             {
                 MeshExternal.transform.localScale = BlockSize;
@@ -156,6 +156,7 @@ public class TableController : MonoBehaviour
 	}
 
 	private void ShowStatement(){
-		statement.text = Message;
+        if (Message == "") statement.text = "Работа идет...";
+        else statement.text = Message;
 	}
 }

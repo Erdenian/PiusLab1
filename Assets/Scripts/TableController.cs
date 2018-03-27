@@ -137,8 +137,8 @@ public class TableController : MonoBehaviour
         newCut = true;
 
         this.reset = reset;
-        BlockSize = blockSize;
-        KnifeSize = new Vector3(knifeSize.x, 0.0f, knifeSize.z);
+        BlockSize = blockSize * 0.999f;
+        KnifeSize = new Vector3(knifeSize.x * 1.001f, 0.0f, knifeSize.z * 1.001f);
         MaxCutDepth = knifeSize.y;
         this.points = points;
     }

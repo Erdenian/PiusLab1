@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 public class TableController : MonoBehaviour
 {
@@ -19,6 +20,9 @@ public class TableController : MonoBehaviour
     public Vector3[] points;
 
     public string Message = "";
+
+    public Text posX, posY, posZ;
+    public Text statement;
 
     private int currentPoint = 0;
 
@@ -50,6 +54,8 @@ public class TableController : MonoBehaviour
 
     void Update()
     {
+        ShowPosition();
+        ShowStatement();
         if (newCut)
         {
             Message = "";
@@ -142,4 +148,19 @@ public class TableController : MonoBehaviour
         MaxCutDepth = knifeSize.y;
         this.points = points;
     }
+
+    public void ShowPosition()
+    {
+        posX.text = transform.position.x.ToString();
+        posY.text = transform.position.y.ToString();
+        posZ.text = transform.position.z.ToString();
+    }
+
+    public void ShowStatement()
+    {
+        if (Message == "") statement.text = "Идет работа...";
+        else statement.text = "Работа завершена";
+    }
+
+
 }

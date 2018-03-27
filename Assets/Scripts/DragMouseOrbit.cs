@@ -18,6 +18,10 @@ public class DragMouseOrbit : MonoBehaviour
     float velocityY = 0.0f;
     bool previousFrameButtonDown = false;
 
+    public TableController tableController;
+    public Material material1, material2, material3;
+    public Texture texture1, texture2, texture3, texture4;
+
     // Use this for initialization
     void Start()
     {
@@ -62,6 +66,18 @@ public class DragMouseOrbit : MonoBehaviour
             transform.position = position;
             velocityX = Mathf.Lerp(velocityX, 0, Time.deltaTime * smoothTime);
             velocityY = Mathf.Lerp(velocityY, 0, Time.deltaTime * smoothTime);
+        }
+
+        if ((tableController.BlockSize == new Vector3(0.7f, 0.7f, 0.7f)) &&
+            (tableController.KnifeSize.x == 0.07f) && (tableController.KnifeSize.z == 0.07f) && (tableController.MaxCutDepth == 0.07f))
+        {
+            material1.mainTexture = texture1;
+            material2.mainTexture = texture2;
+        }
+        else
+        {
+            material1.mainTexture = texture3;
+            material2.mainTexture = texture4;
         }
     }
     public static float ClampAngle(float angle, float min, float max)

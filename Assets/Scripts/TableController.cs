@@ -45,7 +45,7 @@ public class TableController : MonoBehaviour
         verticesExternal = MeshExternal.mesh.vertices;
         verticesInternal = MeshInternal.mesh.vertices;
 
-        groundLevelExternal = (MeshExternal.transform.position - MeshExternal.mesh.bounds.extents).y;
+        groundLevelExternal = MeshExternal.transform.TransformPoint(MeshExternal.transform.position - MeshExternal.mesh.bounds.extents).y;
     }
 
     void Update()
@@ -66,19 +66,20 @@ public class TableController : MonoBehaviour
                 verticesExternal = MeshExternal.mesh.vertices;
                 verticesInternal = MeshInternal.mesh.vertices;
 
+                transform.position = points[0];
+
                 reset = false;
             }
 
             Knife.transform.localScale = new Vector3(KnifeSize.x, Knife.transform.localScale.y, KnifeSize.z);
-            transform.position = points[0];
-            currentPoint = 1;
+            currentPoint = 0;
 
             newCut = false;
         }
 
         if (currentPoint < points.Length)
         {
-            transform.position = Vector3.MoveTowards(transform.position, points[currentPoint], Speed);
+            transform.position = Vector3.MoveTowards(transform.position, points[currentPoint], Speed * Time.deltaTime);
             if (transform.position == points[currentPoint]) currentPoint++;
 
             var knifeBounds = MeshInternal.transform.InverseTransformBounds(Knife.bounds);
@@ -136,8 +137,8 @@ public class TableController : MonoBehaviour
         newCut = true;
 
         this.reset = reset;
-        BlockSize = blockSize;
-        KnifeSize = new Vector2(knifeSize.x, knifeSize.y);
+        BlockSize = blockSize * 0.999f;
+        KnifeSize = new Vector3(knifeSize.x * 1.001f, 0.0f, knifeSize.z * 1.001f);
         MaxCutDepth = knifeSize.y;
         this.points = points;
     }

@@ -67,9 +67,11 @@ public class NetworkHandler : MonoBehaviour
 							Array.Copy (bytes, 0, incommingData, 0, length);							
 							clientMessage += Encoding.UTF8.GetString (incommingData);
 						}
-						Debug.Log ("Получено сообщение: " + clientMessage); 
-						try{
+						Debug.Log ("Получено сообщение: " + clientMessage);
+                        try
+                        {
 							data = (Data)JsonUtility.FromJson<Data> (clientMessage);// разбор полученного сообщения и инициализация объекта
+                            Debug.Log("Количество точек: " + data.points.Length);
                             tableController.StartCutting(data.reset, data.blockSize, data.knifeSize, data.points);
 						}catch(Exception ex){
 							Debug.Log ("Json поврежден. Данные не получены");
